@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Gespeicherte Rezepte</h1>
+{% if recipes %}
+<div class="card-grid">
+    {% for recipe in recipes %}
+    {% set title = recipe.data.get('localizedTitle', {}).get('de') or recipe.data.get('localizedTitle', {}).get('en') or recipe.data.get('localizedTitle', {}).get('es') %}
+    <div class="card">
+        <h3>{{ title or 'Ohne Titel' }}</h3>
+        <p><strong>ID:</strong> {{ recipe.id }}</p>
+        <p><strong>Gespeichert am:</strong> {{ recipe.date }}</p>
+        <a class="btn" href="/recipes/{{ recipe.id }}">Details anzeigen</a>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>Es sind noch keine Rezepte gespeichert. Lade die Rezepte des Tages oder suche per OID/UID.</p>
+{% endif %}
+{% endblock %}

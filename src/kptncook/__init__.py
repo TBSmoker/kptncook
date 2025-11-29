@@ -97,8 +97,11 @@ def get_recipe_from_repository_by_oid(oid: str) -> list[Recipe]:
     :param oid: oid of recipe
     :return: list
     """
-    recipes = get_kptncook_recipes_from_repository()
-    return [recipe for num, recipe in enumerate(recipes) if recipe.id.oid == oid]
+    fs_repo = RecipeRepository(settings.root)
+    recipe = fs_repo.get(oid)
+    if recipe is None:
+        return []
+    return [Recipe.model_validate(recipe.data)]
 
 
 @cli.command(name="sync-with-mealie")
@@ -281,6 +284,16 @@ def get_recipe_by_id(_id: str):
         rprint("More than one recipe found with that ID.")
         sys.exit(1)
     return found_recipes
+
+
+@cli.command(name="web")
+def start_web_frontend(host: str = "127.0.0.1", port: int = 8000):
+    """
+    Start the FastAPI powered web frontend to manage recipes.
+    """
+    import uvicorn
+
+    uvicorn.run("kptncook.web:app", host=host, port=port, reload=False)
 
 
 if __name__ == "__main__":

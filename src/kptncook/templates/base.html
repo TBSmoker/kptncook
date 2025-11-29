@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KptnCook Web</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/style.css') }}">
+</head>
+<body>
+<header>
+    <div>
+        <a href="/">KptnCook Web</a>
+    </div>
+    <nav>
+        <a href="/">Rezepte</a>
+        <a href="/ingredients">Zutaten</a>
+        <form class="inline" action="/actions/search" method="post">
+            <input type="search" name="recipe_identifier" placeholder="OID, UID oder Share URL" required>
+            <button class="btn secondary" type="submit">Rezept suchen</button>
+        </form>
+        <form class="inline" action="/actions/sync-today" method="post">
+            <button class="btn" type="submit">Heutige Rezepte laden</button>
+        </form>
+        <form class="inline" action="/actions/backup-favorites" method="post">
+            <button class="btn secondary" type="submit">Favoriten sichern</button>
+        </form>
+    </nav>
+</header>
+<main>
+    {% block content %}{% endblock %}
+</main>
+</body>
+</html>
