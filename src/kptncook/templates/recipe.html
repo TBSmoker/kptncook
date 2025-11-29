@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% set title = localized_title.get('de') or localized_title.get('en') or localized_title.get('es') %}
+<h1>{{ title or 'Rezept' }} ({{ recipe.id }})</h1>
+<div class="card">
+    <h3>Sprachvarianten</h3>
+    <dl>
+        <dt>Deutsch</dt>
+        <dd>{{ localized_title.get('de') or '—' }}</dd>
+        <dt>Englisch</dt>
+        <dd>{{ localized_title.get('en') or '—' }}</dd>
+        <dt>Spanisch</dt>
+        <dd>{{ localized_title.get('es') or '—' }}</dd>
+        <dt>Französisch</dt>
+        <dd>{{ localized_title.get('fr') or '—' }}</dd>
+        <dt>Portugiesisch</dt>
+        <dd>{{ localized_title.get('pt') or '—' }}</dd>
+    </dl>
+</div>
+
+<h2>Zutaten</h2>
+<div class="card">
+    {% if ingredients %}
+    <ul>
+        {% for ingredient in ingredients %}
+        {% set details = ingredient.get('ingredient', {}) %}
+        {% set names = details.get('localizedTitle', {}) %}
+        <li>
+            <strong>{{ names.get('de') or names.get('en') or names.get('es') or 'Zutat' }}</strong>
+            {% if ingredient.quantity %} - {{ ingredient.quantity }}{% endif %}
+            {% if ingredient.measure %} {{ ingredient.measure }}{% endif %}
+            <div class="muted">{{ names }}</div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>Keine Zutaten gefunden.</p>
+    {% endif %}
+</div>
+
+<h2>Zubereitungsschritte</h2>
+<div class="card">
+    {% if steps %}
+    <ol>
+        {% for step in steps %}
+        {% set step_title = step.get('title', {}).get('de') or step.get('title', {}).get('en') or step.get('title', {}).get('es') %}
+        <li>
+            <p>{{ step_title or 'Schritt' }}</p>
+        </li>
+        {% endfor %}
+    </ol>
+    {% else %}
+    <p>Keine Schritte gespeichert.</p>
+    {% endif %}
+</div>
+{% endblock %}

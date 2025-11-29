@@ -171,6 +171,9 @@ class PaprikaExporter:
                     f"While trying to fetch the cover img a HTTP error occurred: {exc.response.status_code}: {exc}"
                 )
             return None, None
+        except httpx.HTTPError as exc:
+            print(f"While trying to fetch the cover img a network error occurred: {exc}")
+            return None, None
         return cover.name, base64.b64encode(response.content).decode("utf-8")
 
     def get_cover(self, image_list: list[Image]) -> Image | None:

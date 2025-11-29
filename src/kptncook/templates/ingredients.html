@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Zutaten</h1>
+{% if ingredients %}
+<table>
+    <thead>
+    <tr>
+        <th>Key</th>
+        <th>Typ</th>
+        <th>Kategorie</th>
+        <th>Deutsch</th>
+        <th>Englisch</th>
+        <th>Spanisch</th>
+        <th>Französisch</th>
+        <th>Portugiesisch</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for ingredient in ingredients %}
+    <tr>
+        <td>{{ ingredient.key }}</td>
+        <td>{{ ingredient.typ or '—' }}</td>
+        <td>{{ ingredient.category or '—' }}</td>
+        <td>{{ ingredient.localized_title.de or '—' }}</td>
+        <td>{{ ingredient.localized_title.en or '—' }}</td>
+        <td>{{ ingredient.localized_title.es or '—' }}</td>
+        <td>{{ ingredient.localized_title.fr or '—' }}</td>
+        <td>{{ ingredient.localized_title.pt or '—' }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>Noch keine Zutaten gespeichert.</p>
+{% endif %}
+{% endblock %}
