@@ -44,7 +44,23 @@ Commands:
   sync                      Fetch recipes for today from api, save them to...
   sync-with-mealie          Sync locally saved recipes with mealie.
   export-recipes-to-paprika  Export a recipe by id or all recipes to Paprika app
+  web                       Start a small FastAPI web frontend
 ```
+
+Locally gespeicherte Rezepte liegen nun in einer SQLite-Datenbank
+(`~/.kptncook/kptncook.db`). Zutaten werden darin einmalig abgelegt und von
+verschiedenen Rezepten referenziert, inklusive der gelieferten
+Sprachvarianten.
+
+## Web-Frontend starten
+
+```shell
+$ uv run kptncook web --host 0.0.0.0 --port 8000
+```
+
+Anschließend steht unter `http://localhost:8000` ein kleines Web-Frontend zur
+Verfügung, um Rezepte zu durchsuchen, Tagesrezepte zu laden oder Favoriten zu
+sichern.
 
 ## Environment
 
